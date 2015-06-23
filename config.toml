@@ -1,0 +1,15 @@
+baseurl = "http://ydubreuil.github.io"
+languageCode = "en-us"
+title = "Dudu's page"
+theme = "hyde"
+
+[author]
+  name = "Yoann Dubreuil"
+
+[params]
+  description = "some random posts"
+  copyright = "Copyleft CC BY-NC-SA 4.0"
+  twitter = "https://twitter.com/yoanndubreuil"
+  github = "https://github.com/ydubreuil"
+  gplus = "https://plus.google.com/102694339431993959056/"
+  linkedin = "https://fr.linkedin.com/pub/yoann-dubreuil/2a/90b/30"
