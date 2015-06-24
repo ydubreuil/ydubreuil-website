@@ -13,3 +13,8 @@ theme = "hyde"
   github = "https://github.com/ydubreuil"
   gplus = "https://plus.google.com/102694339431993959056/"
   linkedin = "https://fr.linkedin.com/pub/yoann-dubreuil/2a/90b/30"
+
+[permalinks]
+  post = "/post/:year/:month/:title/"
+  talks = "/talks/:year/:month/:title/"
+

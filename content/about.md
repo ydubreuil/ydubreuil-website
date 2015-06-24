@@ -9,3 +9,7 @@ title = "About"
 I am a support engineer at [CloudBees](http://www.cloudbees.com), helping
 customers to get the best of [Jenkins](http://www.jenkins-ci.org), a Open-Source
 continuous integration tool.
+
+I'm volunteering at BreizhCamp and BreizhJUG.
+
+
