@@ -1,13 +1,10 @@
 +++
 Categories = []
 Description = ""
-Tags = ["wifi", "qrcode"]
 date = "2015-07-28T17:55:00+02:00"
 title = "Generating a QR-Code for home Wifi access"
 
 +++
-
-# Generating a QR-code for home Wifi
 
 On ArchLinux, install a QR code generator library
 

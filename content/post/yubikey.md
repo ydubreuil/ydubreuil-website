@@ -1,12 +1,9 @@
 +++
 Categories = []
 Description = ""
-Tags = ["yubikey", "gpg"]
 date = "2015-11-11T11:55:00+02:00"
 title = "Configure the YukiKey on ArchLinux"
 +++
-
-# Configure the YukiKey on ArchLinux
 
 A few months ago, I bought a [YubiKey Neo](https://www.yubico.com/products/yubikey-hardware/) to secure my PGP key and my GMail account with 2FA.
 I also use it to authenticate SSH access (for Github commit mostly).
