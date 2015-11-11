@@ -3,7 +3,6 @@ Categories = []
 Description = ""
 Tags = ["yubikey", "gpg"]
 date = "2015-11-11T11:55:00+02:00"
-menu = "main"
 title = "Configure the YukiKey on ArchLinux"
 +++
 
