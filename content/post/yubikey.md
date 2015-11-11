@@ -94,16 +94,27 @@ $ cp /etc/xdg/autostart/gnome-keyring-ssh.desktop ~/.config/autostart/gnome-keyr
 $ sed -i 's/X-GNOME-AutoRestart=true/X-GNOME-AutoRestart=false/' ~/.config/autostart/gnome-keyring-ssh.desktop
 ```
 
-* Add this line in `~/.gnupg/gpg-agent.conf`
+* Create `~/.config/systemd/user/gpg-agent.service` to start GPG-agent on login with [Systemd/User](https://wiki.archlinux.org/index.php/Systemd/User) facilities
 
 ```
-enable-ssh-support
+[Unit]
+Description=GnuPG private key agent
+IgnoreOnIsolate=true
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/gpg-agent --daemon --enable-ssh-support --homedir=%h/.gnupg
+ExecStop=/usr/bin/pkill gpg-agent
+Restart=on-abort
+
+[Install]
+WantedBy=MyTarget.target
 ```
 
-* Generate SSH public key from GPG key. SSH doesn't know what to do with GPG public key, so we need to convert the GPG public key to SSH format with
+* Enable `gpg-agent.service`
 
 ```shell
-$ gpgkey2ssh
+$ systemctl --user enable gpg-agent.service
 ```
 
 * Define `SSH_AUTH_SOCK` for your Unix session by adding this line in `.pam_environment` ([example](https://github.com/ydubreuil/dotfiles/blob/master/pam_environment#L16))
@@ -113,3 +124,11 @@ SSH_AUTH_SOCK DEFAULT="/home/UNIX_USER/.gnupg/S.gpg-agent.ssh"
 ```
 
 Note: Use a `TAB` character between `SSH_AUTH_SOCK` and `DEFAULT`, not a space character.
+
+* Logout / Login again to update your session
+
+* Generate SSH public key from GPG key. SSH doesn't know what to do with GPG public key, so we need to convert the GPG public key to SSH format with
+
+```shell
+$ gpgkey2ssh <KEY_ID> > ~/.ssh/gpgkey.pub
+```
