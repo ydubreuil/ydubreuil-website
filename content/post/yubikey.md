@@ -91,7 +91,7 @@ ssb>  rsa2048/C691150B  created: 2015-07-20  expires: 2017-07-19
 
 ```shell
 $ cp /etc/xdg/autostart/gnome-keyring-ssh.desktop ~/.config/autostart/gnome-keyring-ssh.desktop
-$ sed -i 's/X-GNOME-AutoRestart=true/X-GNOME-AutoRestart=false/' ~/.config/autostart/gnome-keyring-ssh.desktop
+$ cat 'X-GNOME-Autostart-enabled=false' >> ~/.config/autostart/gnome-keyring-ssh.desktop
 ```
 
 * Create `~/.config/systemd/user/gpg-agent.service` to start GPG-agent on login with [Systemd/User](https://wiki.archlinux.org/index.php/Systemd/User) facilities
@@ -103,12 +103,13 @@ IgnoreOnIsolate=true
 
 [Service]
 Type=forking
+ExecStartPre=-/usr/bin/pkill gpg-agent
 ExecStart=/usr/bin/gpg-agent --daemon --enable-ssh-support --homedir=%h/.gnupg
 ExecStop=/usr/bin/pkill gpg-agent
 Restart=on-abort
 
 [Install]
-WantedBy=MyTarget.target
+WantedBy=default.target
 ```
 
 * Enable `gpg-agent.service`
