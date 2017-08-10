@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Hugo wrapper
+set -eu -o pipefail
+
+# MacOS lover's, I did not forget you ;)
+PROJECT_ROOT="$(cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+cd "$PROJECT_ROOT"
+
+HUGO_VERSION=0.18.1
+
+install_hugo() {
+  mkdir -p .hugo
+  case "`uname`" in
+  Darwin* )
+    curl -L "https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_macOS-64bit.zip" > .hugo/hugo.zip
+    (cd .hugo; unzip hugo.zip)
+    ;;
+  Linux* )
+    curl -L "https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz" | \
+      (cd .hugo; tar xzf -)
+    ;;
+  esac
+
+  if [[ ! -x "$HUGO" ]]; then
+    echo "Unable to install Hugo binary, exiting..."
+    exit 1
+  fi
+}
+
+not_found=0
+HUGO=$(which hugo 2>/dev/null) || not_found=$?
+if [[ $not_found -ne 0 ]]; then
+  case "`uname`" in
+  Darwin*)
+    HUGO=".hugo/hugo_${HUGO_VERSION}_darwin_amd64/hugo_${HUGO_VERSION}_darwin_amd64"
+    ;;
+  Linux*)
+    HUGO=".hugo/hugo_${HUGO_VERSION}_linux_amd64/hugo_${HUGO_VERSION}_linux_amd64"
+    ;;
+  *)
+    echo "No Unable to find Hugo binary, exiting..."
+    exit 1
+  esac
+
+  [[ ! -x "$HUGO" ]] && install_hugo
+fi
+
+"$HUGO" "$@"
